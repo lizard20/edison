@@ -57,16 +57,16 @@ main ( int argc, char* argv [] )
         return 1;
 	}
 
-    mraa_pwm_enable ( pwm, true );
-    mraa_pwm_period_us ( pwm, T );
-    mraa_pwm_write ( pwm, v / 100.0 );
+	mraa_pwm_enable ( pwm, true );
+	mraa_pwm_period_us ( pwm, T );
+	mraa_pwm_write ( pwm, v / 100.0 );
 
 	printf ( "MRAA Version: %s\n", mraa_get_version () );
 	printf ( "Platform: %s\n", mraa_get_platform_name () );
 	printf ( "Port Number: %d\n", pwm_port );
 	printf ( "Period: %1.3f sec \n", T * 1e-6 );
 	printf ( "Frequency: %2.2f Hz \n", 1e6 / T );
-	printf ( "Percentage of PWM: %2.1f\% \n",  100 * mraa_pwm_read ( pwm ) );
+	printf ( "Percentage of PWM: %2.1f \% \n",  100 * mraa_pwm_read ( pwm ) );
 	printf ( "Press \"Enter\" to finish.\n" );
 
 	getchar ();
