@@ -1,5 +1,5 @@
 /* 
-** Name: pwm.cpp
+** Name: pwm.c
 ** Description: Generate a PWM output. The user enters 
 **				the percentage of  duty cycle
 ** Author: Aldo Nunez
@@ -10,7 +10,7 @@
 
 typedef enum{ false, true } bool;
 enum PWM { PWM0 = 3, PWM1 = 5, PWM2 = 6, PWM3 = 9 } pwm_port;
-const int T =  20000; 		/* T ~ period in usec. 100 ~ 10 khz */
+const int T =  20000; 		/* T ~ period in usec */
 
 /*
 ** Name: 		isValid
@@ -49,7 +49,7 @@ main ( int argc, char* argv [] )
 	}
 	pwm_port = PWM0;
 	mraa_init ();
-    mraa_pwm_context pwm;
+	mraa_pwm_context pwm;
 	pwm = mraa_pwm_init ( pwm_port );
 	
 	if ( pwm == NULL )
