@@ -66,7 +66,7 @@ main ( int argc, char* argv [] )
 	printf ( "Port Number: %d\n", pwm_port );
 	printf ( "Period: %1.3f sec \n", T * 1e-6 );
 	printf ( "Frequency: %2.2f Hz \n", 1e6 / T );
-	printf ( "Percentage of PWM: %2.1f \% \n",  100 * mraa_pwm_read ( pwm ) );
+	printf ( "Percentage of PWM: %2.1f %% \n",  100 * mraa_pwm_read ( pwm ) );
 	printf ( "Press \"Enter\" to finish.\n" );
 
 	getchar ();
