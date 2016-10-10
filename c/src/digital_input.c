@@ -1,6 +1,8 @@
-// Program: digital_input.c
-// Description: Read digital input and display its value
-// Author: Aldo Nunez
+/*
+** Program: digital_input.c
+** Description: Read digital input and display its value
+** Author: Aldo Nunez
+*/
 
 #include <stdio.h>
 #include <mraa.h>
