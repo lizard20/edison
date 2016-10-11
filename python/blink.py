@@ -13,7 +13,7 @@ ON = 1
 # 13 ~ led DS2
 LED = 13    
 
-# time
+# time sleep
 T =  1.0    # 1.0 ~ 1 sec 
 
 led = m.Gpio ( LED )
