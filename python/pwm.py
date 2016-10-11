@@ -53,4 +53,5 @@ print ( "Period: " + str ( T * 1.0e-6 ) + " sec" )
 print ( "Frequency: " + str ( 1.0e6 / T ) + " Hz" )
 print ( "Percentage of PWM: "),
 print ( "{0:.2f}".format ( round ( 100 *  out.read (), 2 ) ) )
+
 c = raw_input ( "Press \"Enter\" to finish." )
