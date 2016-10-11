@@ -7,6 +7,8 @@
 #include <mraa.hpp>
 
 using namespace mraa;
+using std::cout;
+
 
 enum PWM { PWM0 = 3, PWM1 = 5, PWM2 = 6, PWM3 = 9 } pwm_port;
 const int T ( 20000 ); 		// T ~ period in usec 
@@ -24,14 +26,14 @@ main ( int argc, char* argv [] )
 {
 	if ( argc < 2 )
 	{
-		std::cout << "Usage: " << argv [ 0 ] << " <number>" << std::endl;  
+		cout << "Usage: " << argv [ 0 ] << " <number>" << std::endl;  
 		return 1;
 	}
 
 	if ( !isValid ( argv [ 1 ] ) )
 	{
-		std::cout << "Invalid argument...." << "\n";
-		std::cout << "Argument must be a number between: 0.0 - 100.0" << "\n";
+		cout << "Invalid argument...." << "\n";
+		cout << "Argument must be a number between: 0.0 - 100.0" << "\n";
 		return 1;	
 	}
 	
@@ -39,7 +41,7 @@ main ( int argc, char* argv [] )
 	
 	if ( ( v > 100.0 ) || ( v  < 0.0 ) )
 	{
-		std::cout << "<number> must be between: 0.0 and 100.0" << std::endl;
+		cout << "<number> must be between: 0.0 and 100.0" << std::endl;
 		return 1;
 	}
 	pwm_port = PWM0;
@@ -53,13 +55,13 @@ main ( int argc, char* argv [] )
 	pwm -> period_us ( T );		// f ~ 1/T
 	pwm -> write ( v / 100.0 );    
 
-	std::cout << "MRAA Version: " << mraa_get_version () << "\n";
-	std::cout << "Platform: " << mraa_get_platform_name () << "\n";
-	std::cout << "Port Number: " << pwm_port << "\n";
-	std::cout << "Period: " << T * 1.0e-6 << " sec" << "\n";
-	std::cout << "Frequency: " << 1.0e6 / T << " Hz" << "\n";
-	std::cout << "Percentage of PWM: " << 100 *  pwm -> read ( ) <<  "%" << "\n";
-	std::cout << "Press \"Enter\" to finish." << "\n";
+	cout << "MRAA Version: " << mraa_get_version () << "\n";
+	cout << "Platform: " << mraa_get_platform_name () << "\n";
+	cout << "Port Number: " << pwm_port << "\n";
+	cout << "Period: " << T * 1.0e-6 << " sec" << "\n";
+	cout << "Frequency: " << 1.0e6 / T << " Hz" << "\n";
+	cout << "Percentage of PWM: " << 100 *  pwm -> read ( ) <<  "%" << "\n";
+	cout << "Press \"Enter\" to finish." << "\n";
 
 	getchar ();
 	delete ( pwm );

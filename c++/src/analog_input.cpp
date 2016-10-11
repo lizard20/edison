@@ -6,7 +6,7 @@
 #include <mraa.hpp>
 
 using namespace mraa;
-using namespace std;
+using std::cout;
 
 // Name: 		isValid
 // Parameters:  pointer to string
@@ -23,14 +23,14 @@ main ( int argc, char* argv[] )
 {
 	if ( argc < 2 )
 	{
-		std::cout << "Usage: " << argv [ 0 ] << " <port>" << std::endl;  
-		std::cout << "<port>: 0..5" << std::endl;  
+		cout << "Usage: " << argv [ 0 ] << " <port>" << std::endl;  
+		cout << "<port>: 0..5" << std::endl;  
 		return 1;
 	}
 
 	if ( !isValid ( argv [ 1 ] ) )
 	{
-		std::cout << "<port> must be between: 0..5" << "\n";
+		cout << "<port> must be between: 0..5" << "\n";
 		return 1;	
 	}
 	
@@ -38,7 +38,7 @@ main ( int argc, char* argv[] )
 	
 	if ( ( port < A0 ) || ( port  > A5 ) )
 	{
-		std::cout << "<port> must be between: 0..5" << std::endl;
+		cout << "<port> must be between: 0..5" << std::endl;
 		return 1;
 	}
 

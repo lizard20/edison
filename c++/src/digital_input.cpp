@@ -6,7 +6,7 @@
 #include <mraa.hpp>
 
 using namespace mraa;
-using namespace std;
+using std::cout;
 
 const int PIN_INPUT ( 5 );
 
