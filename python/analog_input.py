@@ -3,6 +3,7 @@
  Description: Read analog input and displays its value
  Author: Aldo Nunez 
 '''
+
 import time
 import sys
 import mraa as m
@@ -13,11 +14,11 @@ try:
     port =  int ( sys.argv [ 1 ] )
 except:
     print ( "Usage: python " + sys.argv [ 0 ] + " <PORT>" )
-    print ( "<PORT>: 0..5")
-    sys.exit()
+    print ( "<PORT>: 0..5" )
+    sys.exit ()
 
 if ( port > 5 ) or ( port < 0 ):
-    print ( "<Port>: 0..5")
+    print ( "<Port>: 0..5" )
     sys.exit ()
 
 analogIn = m.Aio ( port )
