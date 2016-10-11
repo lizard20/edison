@@ -15,5 +15,3 @@ value  = pin_input.read ()
 print ( "MRAA Version: " +  m.getVersion () );
 print ( "Platform: " +  m.getPlatformName () );
 print ( "Input pin_" + str ( PIN_INPUT ) + ": " + str ( value ) )
-
-
