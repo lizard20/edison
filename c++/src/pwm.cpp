@@ -1,5 +1,5 @@
 // Name: pwm.cpp
-// Description: Generate a PWM output. The user enters 
+// Description: Generates a PWM output. The user enters 
 // 				the percentage of  duty cycle
 // Author: Aldo Nunez
 
@@ -11,7 +11,7 @@ using std::cout;
 
 
 enum PWM { PWM0 = 3, PWM1 = 5, PWM2 = 6, PWM3 = 9 } pwm_port;
-const int T ( 20000 ); 		// T ~ period in usec 
+const int T ( 20000 ); 		// T - period in usec 
 
 // Name: 		isValid
 // Parameters:  pointer to string

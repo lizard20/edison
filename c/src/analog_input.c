@@ -1,6 +1,6 @@
 /*
 ** Program: analog_input.c
-** Description: Read analog input and display its value
+** Description: Reads analog input and displays its value
 ** Author: Aldo Nunez
 */
 

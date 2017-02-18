@@ -1,6 +1,6 @@
-/* 
+/*
 ** Name: pwm.c
-** Description: Generate a PWM output. The user enters 
+** Description: Generates a PWM output. The user enters
 **				the percentage of  duty cycle
 ** Author: Aldo Nunez
 */
@@ -15,7 +15,7 @@ const int T =  20000; 		/* T ~ period in usec */
 /*
 ** Name: 		isValid
 ** Parameters:  pointer to string
-** Output: 		Boolean, true - if it is a valid input. 	
+** Output: 		Boolean, true - if it is a valid input.
 **				false - if it is not a valid input
 ** Description:	Check if the input is a number or a
 ** 				decimal point.
@@ -25,33 +25,38 @@ bool isValid ( char* );
 int
 main ( int argc, char* argv [] )
 {
+	/* checks if the number of arguments is valid */
 	if ( argc < 2 )
 	{
-		printf ( "Usage: %s <number>", argv [ 0 ] );  
+		printf ( "Usage: %s <number>", argv [ 0 ] );
 
 		return 1;
 	}
 
+	/* checks if the argument is  a valid  number */
 	if ( !isValid ( argv [ 1 ] ) )
 	{
 		printf ( "Invalid argument....\n" );
 		printf ( "Argument must be a number between: 0.0 - 100.0 \n" );
 
-		return 1;	
+		return 1;
 	}
-	
+
+	/*	converts the input argument to floating point
+		and checks if it is in the valid interval
+	*/
 	float v =  atof ( argv [ 1 ] );		/* percentage value */
-	
 	if ( ( v > 100.0 ) || ( v  < 0.0 ) )
 	{
 		printf ( "<number> must be between: 0.0 and 100.0\n" );
 		return 1;
 	}
+
 	pwm_port = PWM0;
 	mraa_init ();
 	mraa_pwm_context pwm;
 	pwm = mraa_pwm_init ( pwm_port );
-	
+
 	if ( pwm == NULL )
 	{
         return 1;

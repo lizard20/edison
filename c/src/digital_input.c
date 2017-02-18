@@ -1,6 +1,6 @@
 /*
 ** Program: digital_input.c
-** Description: Read digital input and display its value
+** Description: Read a digital input and display its value
 ** Author: Aldo Nunez
 */
 
