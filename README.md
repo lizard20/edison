@@ -1,1 +1,1 @@
-[tutorial.pdf](https://raw.githubusercontent.com/lizard20/edison/master/tutorial.pdf)
+[tutorial.pdf](http://lizard20.io/)
