@@ -2,7 +2,6 @@
 // Description: Read analog input and display its value
 // Author: Aldo Nunez
 
-
 var m = require ( 'mraa' );     // module  mraa
 
 const ANALOG_IN = { A0: 0, A1: 1, A2: 2, A3: 3, A4: 4, A5: 5 };  // analog ports: A0 - A5
