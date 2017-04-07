@@ -7,7 +7,6 @@ var m = require ( 'mraa' );     // module  mraa
 const ANALOG_IN = { A0: 0, A1: 1, A2: 2, A3: 3, A4: 4, A5: 5 };  // analog ports: A0 - A5
 const  NBITS  = 12;            // number of bits
 
-
 // Check if the number of arguments is 3
 if ( process.argv.length < 3 )
 {
