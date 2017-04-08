@@ -28,8 +28,8 @@ main ( int argc, char* argv [] )
 	/* checks if the number of arguments is valid */
 	if ( argc < 2 )
 	{
-		printf ( "Usage: %s <number>", argv [ 0 ] );
-
+		printf ( "Usage: %s <duty cycle>\n", argv [ 0 ] );
+		printf ( "<duty cycle> 0.0 ... 100.0\n" );
 		return 1;
 	}
 
@@ -37,7 +37,7 @@ main ( int argc, char* argv [] )
 	if ( !isValid ( argv [ 1 ] ) )
 	{
 		printf ( "Invalid argument....\n" );
-		printf ( "Argument must be a number between: 0.0 - 100.0 \n" );
+		printf ( "<duty cycle> must be a number between: 0.0 - 100.0 \n" );
 
 		return 1;
 	}
@@ -45,10 +45,10 @@ main ( int argc, char* argv [] )
 	/*	converts the input argument to floating point
 		and checks if it is in the valid interval
 	*/
-	float v =  atof ( argv [ 1 ] );		/* percentage value */
-	if ( ( v > 100.0 ) || ( v  < 0.0 ) )
+	float duty_cycle =  atof ( argv [ 1 ] );		/* percentage value */
+	if ( ( duty_cycle > 100.0 ) || ( duty_cycle  < 0.0 ) )
 	{
-		printf ( "<number> must be between: 0.0 and 100.0\n" );
+		printf ( "<duty cycle> must be between: 0.0 and 100.0\n" );
 		return 1;
 	}
 
@@ -64,14 +64,14 @@ main ( int argc, char* argv [] )
 
 	mraa_pwm_enable ( pwm, true );
 	mraa_pwm_period_us ( pwm, T );
-	mraa_pwm_write ( pwm, v / 100.0 );
+	mraa_pwm_write ( pwm, duty_cycle / 100.0 );
 
 	printf ( "MRAA Version: %s\n", mraa_get_version () );
 	printf ( "Platform: %s\n", mraa_get_platform_name () );
 	printf ( "Port Number: %d\n", pwm_port );
 	printf ( "Period: %1.3f sec \n", T * 1e-6 );
 	printf ( "Frequency: %2.2f Hz \n", 1e6 / T );
-	printf ( "Percentage of PWM: %2.1f %% \n",  100 * mraa_pwm_read ( pwm ) );
+	printf ( "Percentage of PWM: %2.1f \n",  100 * mraa_pwm_read ( pwm ) );
 	printf ( "Press \"Enter\" to finish.\n" );
 
 	getchar ();
@@ -93,5 +93,3 @@ isValid ( char* str )
 	}
 	return true;
 }
-
-

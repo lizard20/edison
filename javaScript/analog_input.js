@@ -10,7 +10,7 @@ const  NBITS  = 12;            // number of bits
 // Check if the number of arguments is 3
 if ( process.argv.length < 3 )
 {
-    console.log ( "Usage: " + process.argv [ 1 ].split ( "/") [ 5 ] + " <port>" );
+    console.log ( "Usage: node " + process.argv [ 1 ].split ( "/") [ 5 ] + " <port>" );
     console.log ( "<port>: 0 | 1 | 2 | 3 | 4 | 5" );
 
     process.exit ( 1 );
