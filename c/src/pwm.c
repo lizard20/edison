@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <mraa.h>
 
-typedef enum{ false, true } bool;
+typedef enum { false, true } bool;
 enum PWM { PWM0 = 3, PWM1 = 5, PWM2 = 6, PWM3 = 9 } pwm_port;
 const int T =  20000; 		/* T ~ period in usec */
 
