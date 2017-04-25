@@ -67,7 +67,7 @@ main ( int argc, char* argv [] )
 	cout << "PWM port: " << pwm_port << "\n";
 	cout << dir << "\n"; 
 
-	getchar ();
+	std::cin.ignore ();
 	delete ( pwm );
 
 	return ( MRAA_SUCCESS );

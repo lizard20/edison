@@ -68,7 +68,7 @@ main ( int argc, char* argv [] )
 	cout << "Percentage of PWM: " << 100 *  pwm -> read () << "\n";
 	cout << "Press \"Enter\" to finish." << "\n";
 
-	getchar ();
+	std::cin.ignore ();
 	delete ( pwm );
 
 	return ( MRAA_SUCCESS );
