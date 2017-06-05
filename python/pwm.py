@@ -9,6 +9,8 @@ import mraa as m
 import sys
 
 PWM = { 'PWM0':3, 'PWM1':5, 'PWM2':6, 'PWM3':9 }
+# STATE
+OFF = 0;
 T = 20000    # Period: 20000 usec ~ 50 Hz
 
 ''' 
@@ -25,6 +27,11 @@ def isValid ( string ):
     except:
 
         return False
+
+def turnOff ( port ):
+    p = m.Gpio ( port )
+    p.dir ( m.DIR_OUT )
+    p.write ( OFF )
         
 if len ( sys.argv ) < 2:
     print ( "Usage: "+ sys.argv [ 0 ] + " <number>" )
@@ -55,3 +62,5 @@ print ( "Percentage of PWM: "),
 print ( "{0:.2f}".format ( round ( 100 *  out.read (), 2 ) ) )
 
 c = raw_input ( "Press \"Enter\" to finish." )
+turnOff ( PIN_PORT )
+

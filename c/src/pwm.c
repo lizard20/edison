@@ -22,6 +22,14 @@ const int T =  20000; 		/* T ~ period in usec */
 */
 bool isValid ( char* );
 
+/*
+** Name: 		turnOff
+** Parameters:  int
+** Output: 		void
+** Description:	Turn off the output
+*/
+void turnOff ( int );
+
 int
 main ( int argc, char* argv [] )
 {
@@ -76,6 +84,7 @@ main ( int argc, char* argv [] )
 
 	getchar ();
 	mraa_pwm_close ( pwm );
+	turnOff ( pwm_port );
 
 	return ( MRAA_SUCCESS );
 }
@@ -93,3 +102,18 @@ isValid ( char* str )
 	}
 	return true;
 }
+
+void
+turnOff ( int port )
+{
+	const int OFF = 0;
+
+	mraa_gpio_context p;
+	p = mraa_gpio_init ( port );	
+	mraa_gpio_dir ( p, MRAA_GPIO_OUT );
+	mraa_gpio_write ( p, OFF );
+
+	return;
+}
+
+

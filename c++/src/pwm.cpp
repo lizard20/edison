@@ -21,6 +21,13 @@ const int T ( 20000 ); 		// T - period in usec
 // 				decimal point.
 bool isValid ( char* );
 
+//  Name: 		turnOff
+// Parameters:  int
+// Output: 		void
+// Description:	Turn off the output
+//
+void turnOff ( int );
+
 int
 main ( int argc, char* argv [] )
 {
@@ -70,6 +77,7 @@ main ( int argc, char* argv [] )
 
 	std::cin.ignore ();
 	delete ( pwm );
+	turnOff ( pwm_port );
 
 	return ( MRAA_SUCCESS );
 }
@@ -87,5 +95,19 @@ isValid ( char* str )
 	}
 	return true;
 }
+
+void
+turnOff ( int port )
+{
+	const int OFF = 0;
+
+	mraa::Gpio p ( port );
+	mraa::Result response = p.dir ( mraa::DIR_OUT );
+	p.write ( OFF );
+
+	return;
+}
+
+
 
 
