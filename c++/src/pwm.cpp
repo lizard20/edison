@@ -1,62 +1,82 @@
 // Name: pwm.cpp
 // Description: Generates a PWM output. The user enters
-// 				the percentage of  duty cycle
+// 				the port name  and the percentage of duty cycle
 // Author: Aldo Nunez
 
 #include <iostream>
+#include <string>
 #include <mraa.hpp>
 
 using namespace mraa;
-using std::cout;
+using namespace std;
 
 
-enum PWM { PWM0 = 3, PWM1 = 5, PWM2 = 6, PWM3 = 9 } pwm_port;
+const int gpio [] = { 3, 5, 6, 9 };
+const string pwm [] = { "P0", "P1", "P2", "P3" };
 const int T ( 20000 ); 		// T - period in usec
 
-// Name: 		isValid
-// Parameters:  pointer to string
+// Name: 		isValidPort
+// Parameters:  String
+// Output: 		Integer:
+// 					port index number
+// 					-1, if it is not a valid port.
+// Description:	Check if the input is a valid port.
+// 				If it is a valid port, return port index number
+// 				If it is not a valid port, return -1
+int isValidPort ( string );
+
+// Name: 		isValidDC
+// Parameters:  String
 // Output: 		Boolean, true - if it is a valid input.
 // 				false - if it is not a valid input
 // Description:	Check if the input is a number or a
 // 				decimal point.
-bool isValid ( char* );
+bool isValidDC ( string );
 
 //  Name: 		turnOff
 // Parameters:  int
 // Output: 		void
 // Description:	Turn off the output
-//
 void turnOff ( int );
 
 int
 main ( int argc, char* argv [] )
 {
-	if ( argc < 2 )
+	if ( argc < 3 )
 	{
-		cout << "Usage: " << argv [ 0 ] << " <duty cycle>" << std::endl;
-		cout << "<duty cycle> 0.0 ... 100.0" << std::endl;
-
+		cout << "Usage: " << argv [ 0 ] << "<port>" << " <duty cycle>" << endl;
+		cout << "<port>: " << pwm [ 0 ] << " | " << pwm [ 1 ] << " | " <<  pwm [ 2 ] <<  " | " <<  pwm [ 3 ] << endl;
+		cout << "<duty cycle>: 0.0 - 100.0" << endl;
 		return 1;
 	}
 
-	if ( !isValid ( argv [ 1 ] ) )
+	 // check if it is a valid  port
+	int port_index;
+	if ( ( port_index = isValidPort ( argv [ 1 ] ) ) == -1 )
+	{
+		cout <<  "Invalid port...." << endl;
+		cout << "<port> must be: " << pwm [ 0 ] << " | " << pwm [ 1 ] << " | " <<  pwm [ 2 ] <<  " | " <<  pwm [ 3 ] << endl;
+		return 1;
+	}
+
+	// check if it is a valid duty cycle
+	if ( !isValidDC ( argv [ 2 ] ) )
 	{
 		cout << "Invalid argument...." << "\n";
-		cout << "<duty cycle> must be a number between: 0.0 - 100.0" << "\n";
-
+		cout << "<duty cycle> must be a number between: 0.0 - 100.0" << endl;
 		return 1;
 	}
 
-	float dutyCycle ( atof ( argv [ 1 ] ) );		// percentage value
-
+	// convert the input argument to floating point
+	// and check if it is in the valid interval
+	float dutyCycle ( atof ( argv [ 2 ] ) );		// percentage value
 	if ( ( dutyCycle > 100.0 ) || ( dutyCycle  < 0.0 ) )
 	{
-		cout << "<ducty cycle> must be between: 0.0 - 100.0" << std::endl;
-
+		cout << "<duty cycle> must be between: 0.0 - 100.0" << endl;
 		return 1;
 	}
 
-	pwm_port = PWM0;
+	int pwm_port ( gpio [ port_index ] );
 	Pwm* pwm = new Pwm ( pwm_port );
 	if ( pwm == NULL )
 	{
@@ -67,15 +87,15 @@ main ( int argc, char* argv [] )
 	pwm -> period_us ( T );		// f ~ 1/T
 	pwm -> write ( dutyCycle / 100.0 );
 
-	cout << "MRAA Version: " << mraa_get_version () << "\n";
-	cout << "Platform: " << mraa_get_platform_name () << "\n";
-	cout << "Port Number: " << pwm_port << "\n";
-	cout << "Period: " << T * 1.0e-6 << " sec" << "\n";
-	cout << "Frequency: " << 1.0e6 / T << " Hz" << "\n";
-	cout << "Percentage of PWM: " << 100 *  pwm -> read () << "\n";
-	cout << "Press \"Enter\" to finish." << "\n";
+	cout << "MRAA Version: " << mraa_get_version () << endl;
+	cout << "Platform: " << mraa_get_platform_name () << endl;
+	cout << "Port Number: " << pwm_port << endl;
+	cout << "Period: " << T * 1.0e-6 << " sec" << endl;
+	cout << "Frequency: " << 1.0e6 / T << " Hz" << endl;
+	cout << "Percentage of PWM: " << 100 *  pwm -> read () << endl;
+	cout << "Press \"Enter\" to finish." << endl;
 
-	std::cin.ignore ();
+	cin.ignore ();
 	delete ( pwm );
 	turnOff ( pwm_port );
 
@@ -83,31 +103,41 @@ main ( int argc, char* argv [] )
 }
 
 bool
-isValid ( char* str )
+isValidDC ( string s )
 {
-	while ( *str != 0 )
+	int i ( 0 );
+
+	while ( s [ i ] != 0 )
 	{
-		if ( !isdigit ( *str )  &&  ( *str != '.' ) )
+		if ( !isdigit ( s [ i ] )  &&  ( s [ i ] != '.' ) )
 		{
 			return false;
 		}
-		str++;
+		i++;
 	}
 	return true;
+}
+
+int 
+isValidPort ( string port )
+{
+	for ( int i ( 0 ); i < sizeof ( pwm ) / sizeof ( pwm [ 0 ] ); i++ )
+	{
+		if ( port.compare ( pwm [ i ] ) == 0 )
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 void
 turnOff ( int port )
 {
-	const int OFF = 0;
+	int OFF ( 0 );
 
 	mraa::Gpio p ( port );
 	mraa::Result response = p.dir ( mraa::DIR_OUT );
 	p.write ( OFF );
-
 	return;
 }
-
-
-
-

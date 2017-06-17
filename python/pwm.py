@@ -8,46 +8,76 @@
 import mraa as m
 import sys
 
-PWM = { 'PWM0':3, 'PWM1':5, 'PWM2':6, 'PWM3':9 }
-# STATE
-OFF = 0;
+PWM = { 'P0':3, 'P1':5, 'P2':6, 'P3':9 }
 T = 20000    # Period: 20000 usec ~ 50 Hz
 
 ''' 
- Name:         isValid
- Parameters:   string
- Output: 	boolean, True - if it is a valid input. 	
+ Name:          isValidPort
+ Parameters:    string
+ Output:         True - if it is a valid input. 	
  		False - if it is not a valid input
  Description:	Check if the input is a valid number 
 '''
-def isValid ( string ):
+def isValidPort ( string ):
+    if string in PWM:
+        return PWM [ string ] 
+    return False
+
+
+''' 
+ Name:          isValidDC
+ Parameters:    string
+ Output:        boolean, True - if it is a valid input. 	
+ 		False - if it is not a valid input
+ Description:	Check if the input is a valid number 
+'''
+def isValidDC ( string ):
     try:
-        float (string)
+        float ( string )
         return True
     except:
 
         return False
 
+'''
+ Name:          turnOff
+ Parameters:    number
+ Output:        None
+ Description:   Turn off the output
+'''
 def turnOff ( port ):
+    OFF = 0;
     p = m.Gpio ( port )
     p.dir ( m.DIR_OUT )
     p.write ( OFF )
         
-if len ( sys.argv ) < 2:
-    print ( "Usage: "+ sys.argv [ 0 ] + " <number>" )
+if len ( sys.argv ) < 3:
+    print ( "Usage: python " + sys.argv [ 0 ] +  " <port>" + " <number>" )
+    print ( "<port>: P0 | P1 | P2 | P3" )
+    print ( "<number>: 0.0 - 100.0" )
     sys.exit ()
 
-if isValid ( sys.argv [ 1 ] ) == False:
+# check if it is a valid  port
+p = isValidPort ( sys.argv [ 1 ] )
+if p  == False:
+    print ( "Invalid port...." )
+    print ( "Argument must be: P0 | P1 | P2 | P3" )
+    sys.exit ()
+
+# check if it is a valid duty cycle
+if isValidDC ( sys.argv [ 2 ] ) == False:
     print ( "Invalid argument...." )
     print ( "Argument must be a number between: 0.0 - 100.0" )
     sys.exit ()
 
-value = float ( sys.argv [ 1 ] );
+# convert the input argument to floating point
+# and check if it is in the valid interval
+value = float ( sys.argv [ 2 ] );
 if value < 0.0 or value > 100.0:
     print ( "<number> must be between: 0.0 - 100.0" )
     sys.exit ()
 	     
-PIN_PORT = PWM [ 'PWM0' ]
+PIN_PORT = p
 out = m.Pwm ( PIN_PORT )
 out.period_us ( T )
 out.enable ( True )

@@ -98,5 +98,3 @@ isValid ( char* str )
 	}
 	return true;
 }
-
-
