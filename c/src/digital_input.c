@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <mraa.h>
 
-const int PIN_INPUT = 5;
+const int PIN_INPUT = 13;
 
 int
 main ( void )

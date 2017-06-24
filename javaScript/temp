@@ -4,14 +4,17 @@
 
 var m = require ( 'mraa' ); 	// module  mraa
 
+const STATE  = { OFF: 0, ON: 1 };
+const LED = 13;					// 13 ~ led DS2
+const T = 1000;					// 1000 ~ 1 msec 
 
-var led = new m.Gpio ( 13 ); 	// choose pin
+var led = new m.Gpio ( LED ); 	// choose pin  
 led.dir ( m.DIR_OUT ); 			// set the gpio direction
 
 
 // Name: sleep
 // Input: The number of milliseconds
-// Output:
+// Output: 
 // Description: Produce a delay of n milliseconds
 function sleep ( n )
 {
@@ -22,8 +25,8 @@ function sleep ( n )
 
 while ( 1 )
 {
-	led.write ( 1 );
-	sleep ( 1 );
-	led.write ( 0 );
-	sleep ( 1 );
+	led.write ( STATE.ON );
+	sleep ( T );			
+	led.write ( STATE.OFF );
+	sleep ( T );
 }

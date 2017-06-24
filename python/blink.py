@@ -7,31 +7,15 @@ import mraa as m
 import time
 import sys
 
-
-# STATES
-OFF = 0 
-ON = 1
-
-# 13 ~ led DS2
-LED = 13    
-
-# time
-T =  1.0    # 1.0 ~ 1 sec 
-
-def main():
-    led = m.Gpio ( LED )
+def main ():
+    led = m.Gpio ( 13 )
     led.dir ( m.DIR_OUT )
-    print ( "To finish press: Ctrl + c" )
-    try:
-        while True:
-            led.write ( ON )
-            time.sleep ( T )
-            led.write ( OFF )
-            time.sleep ( T )
-    except KeyboardInterrupt:
-        led.write ( OFF )
-        print ( "blink is closing..." )
-        sys.exit ( 0 )
+
+    while True:
+        led.write ( 1 )
+        time.sleep ( 1 )
+        led.write ( 0 )
+        time.sleep ( 1 )
 
 if __name__ == "__main__":
     main ()
