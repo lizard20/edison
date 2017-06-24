@@ -1,7 +1,7 @@
 /*
 ** Program: blink_io.c
 ** Description: blink any LED connected to pines
-				IO0 to Io13
+				IO0 to IO13
 ** Author: Aldo Nunez
 */
 

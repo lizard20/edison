@@ -1,8 +1,10 @@
 '''
- Program: blink_io.py
- Description: blink LED
- Author: Aldo Nunez
+** Program: blink_io.py
+** Description: blink any LED connected to pines
+                IO0 to IO13
+** Author: Aldo Nunez
 '''
+
 import mraa as m
 import time
 import sys
@@ -24,12 +26,12 @@ def main():
     try:
         port =  int ( sys.argv [ 1 ] )
     except:
-        print ( "Usage: python " + sys.argv [ 0 ] + " <port>" )
+        print ( "Usage: python %s <port>" % sys.argv [ 0 ] )
         print ( "<port>: 0 | 1 | 2 | 3 |...| 13 " )
         sys.exit ()
 
-    if port < ports [ 0 ] or port > ( len ( ports ) ):
-        print ( "<port> must be an integer number between: %d - %d" % ( ports [ 0 ], len ( ports ) - 1 ) )
+    if port < min( ports ) or port > max ( ports ):
+        print ( "<port> must be an integer number between: %d - %d" % ( min ( ports ), max ( ports ) ) )
         sys.exit ()
 
     led = m.Gpio ( port )
@@ -38,11 +40,11 @@ def main():
 
     response = led.dir ( m.DIR_OUT )
     if response != m.SUCCESS:
-        m.printError ( r )
+        m.printError ( response )
         sys.exit()
 
-    print ( "MRAA Version: " +  m.getVersion () )
-    print ( "Platform: " + m.getPlatformName () )
+    print ( "MRAA Version: %s" %  m.getVersion () )
+    print ( "Platform: %s" % m.getPlatformName () )
     print ( "blinking port %d ..." %  port )
     print ( "To finish press: Ctrl + c" )
 
@@ -50,13 +52,13 @@ def main():
         while True:
             response = led.write ( ON )
             if response != m.SUCCESS:
-                m.printError ( r )
+                m.printError ( response )
 
             time.sleep ( T )
 
             response = led.write ( OFF )
             if response != m.SUCCESS:
-                m.printError ( r )
+                m.printError ( response )
 
             time.sleep ( T )
     except KeyboardInterrupt:
