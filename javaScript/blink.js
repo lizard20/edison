@@ -1,29 +1,24 @@
 // Program: blink.js
 // Description: blink LED
 // Author: Aldo Nunez
+ 
+module  mraa
+var m = require ( 'mraa' );
 
-var m = require ( 'mraa' ); 	// module  mraa
+// choose pin
+var led = new m.Gpio ( 13 );
 
+// set the gpio direction
+led.dir ( m.DIR_OUT );
 
-var led = new m.Gpio ( 13 ); 	// choose pin
-led.dir ( m.DIR_OUT ); 			// set the gpio direction
+var flag = true;
 
+// set time interval
+setInterval ( toogle, 1000 );
 
-// Name: sleep
-// Input: The number of milliseconds
-// Output:
-// Description: Produce a delay of n milliseconds
-function sleep ( n )
+// turn on and turn off led
+function toogle ()
 {
-	var start = new Date().getTime();
-	while ( ( new Date().getTime () - start ) < n )
-	{}
-}
-
-while ( 1 )
-{
-	led.write ( 1 );
-	sleep ( 1 );
-	led.write ( 0 );
-	sleep ( 1 );
+    flag ? led.write ( 1 ): led.write ( 0 );
+    flag ^= true;
 }

@@ -1,6 +1,6 @@
 /*
 ** Program: blink_io.c
-** Description: blink any LED connected to pines
+** Description: blink any LED connected to ports
 				IO0 to IO13
 ** Author: Aldo Nunez
 */
@@ -15,10 +15,11 @@ typedef enum { false, true } bool;
 /* OFF = 0, ON = 1 */
 enum STATE { OFF, ON };
 
- /* digital ports: 0 - 13 */
-enum DIGITAL_OUT { IO0, IO1, IO2, IO3, IO4, IO5, IO6, IO7, IO8, IO9, IO10, IO11, IO12, IO13} digital_output;
+/* number of digital outputs ports */
+const unsigned int PORTS = 14;
 
-const useconds_t T = 1e6;	/* 1e6 ~ 1 sec */
+/* 1e6 ~ 1 sec */
+const useconds_t T = 1e6;
 
 volatile sig_atomic_t  flag = 1;
 
@@ -61,10 +62,10 @@ main ( int argc, char* argv [] )
         return 1;
     }
 
-	int led_pin =  atoi ( argv [ 1 ] );
+	int port =  atoi ( argv [ 1 ] );
 
     /* Check if the number is between: 0 - 13 */
-    if ( ( led_pin < IO0 ) || ( led_pin  > IO13 ) )
+    if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
     {
         fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
 
@@ -75,11 +76,11 @@ main ( int argc, char* argv [] )
 	mraa_gpio_context led;
 
 	/* Initialize pin LED_PIN for led */
-	led = mraa_gpio_init ( led_pin );
+	led = mraa_gpio_init ( port );
 	if ( led == NULL )
 	{
-        fprintf (stderr, "The pin%d you requested is not valid!", led_pin );
-        exit(1);
+        fprintf (stderr, "The port %d that you requested is not valid!", port );
+        return 1;
     }
 
 	/* set gpio drection to  out */
@@ -91,7 +92,7 @@ main ( int argc, char* argv [] )
 
     printf ( "MRAA Version: %s\n", mraa_get_version () );
     printf ( "Platform: %s\n", mraa_get_platform_name () );
-    printf ( "blinking port %d...\n", led_pin );
+    printf ( "blinking port %d...\n", port );
 	printf ( "To finish press: Ctrl + c \n" );
 
 	signal ( SIGINT, manage_signal );

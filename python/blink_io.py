@@ -1,8 +1,8 @@
 '''
-** Program: blink_io.py
-** Description: blink any LED connected to pines
+    Program: blink_io.py
+    Description: blink any LED connected to pines
                 IO0 to IO13
-** Author: Aldo Nunez
+    Author: Aldo Nunez
 '''
 
 import mraa as m
@@ -14,7 +14,7 @@ import sys
 OFF = 0
 ON = 1
 
-# PORTS
+# Number if digital output ports
 N = 14
 
 ports = [ i for i in range ( N ) ]
@@ -22,7 +22,7 @@ ports = [ i for i in range ( N ) ]
 # time
 T =  1.0    # 1.0 ~ 1 sec
 
-def main():
+def main ():
     try:
         port =  int ( sys.argv [ 1 ] )
     except:

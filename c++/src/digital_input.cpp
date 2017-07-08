@@ -6,36 +6,27 @@
 #include <mraa.hpp>
 
 using namespace mraa;
-using std::cout;
+using namespace std;
 
-const int PIN_INPUT ( 5 );
+const int PORT ( 5 );
 
 int
 main ( void )
 {
-	int iopin ( PIN_INPUT );
-	Gpio* gpio = new Gpio ( iopin );
+    // initialize variable with a pin number
+    Gpio* port_input = new Gpio ( PORT );
 
-    if ( gpio == NULL )
-	{
-        return ERROR_UNSPECIFIED;
-    }
+    // set gpio direction to input
+	port_input -> dir ( DIR_IN );
 
-	Result input = gpio -> dir ( DIR_IN );
+    /* read port value */
+	int value ( port_input -> read () );
 
-    if ( input != SUCCESS )
-	{
-        printError ( input );
-        return ERROR_UNSPECIFIED;
-    }
+	cout << "MRAA Version: " << mraa_get_version () << endl;
+	cout << "Platform: " << mraa_get_platform_name () << endl;
+	cout << "input port " << PORT << ": " << value  << endl;
 
-	int value ( gpio -> read () );
-
-	cout << "MRAA Version: " << mraa_get_version () << "\n";
-	cout << "Platform: " << mraa_get_platform_name () << "\n";
-	cout << "input pin_" << PIN_INPUT << ": " << value  << "\n";
-
-	delete ( gpio );
+	delete ( port_input );
 
 	return ( MRAA_SUCCESS );
 }

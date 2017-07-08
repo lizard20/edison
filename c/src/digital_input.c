@@ -7,23 +7,27 @@
 #include <stdio.h>
 #include <mraa.h>
 
-const int PIN_INPUT = 13;
+const int PORT = 5;
 
-int
-main ( void )
+int main ( void )
 {
-	mraa_init ();
-	mraa_gpio_context pin_input;
-	pin_input = mraa_gpio_init ( PIN_INPUT );
-	mraa_gpio_dir ( pin_input, MRAA_GPIO_IN );
+    /* declare variable as a gpio type */
+	mraa_gpio_context port_input;
 
-	int value = mraa_gpio_read ( pin_input );
+    /* initialize variable with a port number*/
+    port_input = mraa_gpio_init ( PORT );
 
-	printf ( "MRAA Version: %s\n", mraa_get_version () );
-	printf ( "Platform: %s\n", mraa_get_platform_name () );
-	printf ( "Input pin_%d: %d\n", PIN_INPUT, value );
+    /* set gpio direction to input */
+	mraa_gpio_dir ( port_input, MRAA_GPIO_IN );
 
-	mraa_gpio_close ( pin_input );
+    /* read port value */
+	int value = mraa_gpio_read ( port_input );
+
+    /* print port number and its value */
+	printf ( "Input port %d: %d\n", PORT, value );
+
+    /* close port */
+	mraa_gpio_close ( port_input );
 
 	return ( MRAA_SUCCESS );
 }

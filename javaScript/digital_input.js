@@ -2,21 +2,19 @@
 // Description: Reads a digital input and displays its value
 // Author: Aldo Nunez
 
-const PIN_INPUT = 5;					
+const PORT = 5;
 
-var m = require ( 'mraa' ); 	
-var  gpio = new m.Gpio ( PIN_INPUT ); //  
-gpio.dir ( m.DIR_IN ); 			// sets the gpio direction
-var input = gpio.read ();   // Reads the digital value
+var m = require ( 'mraa' );
 
-console.log ( 'MRAA Version: ' + m.getVersion () );
-console.log ( 'Platform: ' + m.getPlatformName () );
-console.log ( "input_pin_" + input + ": " + input );
+// initialize variable with a port number
+var  port_input = new m.Gpio ( PORT );
 
+// sets the gpio direction
+port_input.dir ( m.DIR_IN );
 
+// Reads the digital value
+var value = port_input.read ();
 
+console.log ( "Input port " + PORT + ": " + value );
 
-
-
-
-
+delete ( port_input );
