@@ -6,7 +6,8 @@
 
 #include <mraa.h>
 
-int main ( void )
+int
+main ( void )
 {
 	/* declare led  variable as a gpio type */
 	mraa_gpio_context led;
