@@ -34,7 +34,7 @@ volatile sig_atomic_t  flag = 1;
 bool isValid ( char* );
 
 /*
-** Name: manage_signal
+** Name: manageSignal
 ** Input: Integer
 ** Output: None
 ** Description: Catch the signal interrupt,
