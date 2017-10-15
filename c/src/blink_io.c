@@ -42,7 +42,7 @@ bool isValid ( char* );
 ** 				by the user  and  modify
 ** 				flag variable
 */
-void manage_signal ( int );
+void manageSignal ( int );
 
 int
 main ( int argc, char* argv [] )
@@ -95,7 +95,7 @@ main ( int argc, char* argv [] )
     printf ( "blinking port %d...\n", port );
 	printf ( "To finish press: Ctrl + c \n" );
 
-	signal ( SIGINT, manage_signal );
+	signal ( SIGINT, manageSignal );
 
 	/* blink indefinitely until (Ctrl + c) */
 	while ( flag )
@@ -137,7 +137,7 @@ isValid ( char* str )
 }
 
 void
-manage_signal ( int sig )
+manageSignal ( int sig )
 {
 	if ( sig == SIGINT )
 	{

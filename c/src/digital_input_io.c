@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <mraa.h>
 
+#define VERSION 0.1
+
 typedef enum { false, true } bool;
 
 /* Number of digital input ports*/
