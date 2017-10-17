@@ -9,7 +9,8 @@
 
 const int PORT = 5;
 
-int main ( void )
+int 
+main ( void )
 {
     /* declare variable as a gpio type */
 	mraa_gpio_context port_input;
