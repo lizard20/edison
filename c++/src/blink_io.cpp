@@ -24,6 +24,21 @@ const useconds_t T = 1e6;	/* 1e6 ~ 1 sec */
 
 volatile sig_atomic_t  flag ( 1 );
 
+/************  Functions prototypes ************/
+/*
+** Name:      	isValidArgument
+** Parameters:  1.- Integer,  number of arguments
+** 				2.- Initail address of  pointers array to char
+** Output:      Boolean
+                true - 	if the input is a valid argument.
+						if it is an integer number, and  it 
+						is between 0 and 13
+**              false - if it is not an integer number between
+**              0 - 13
+** Description: Check if the inputs are valid arguments
+*/
+bool isValidArgument ( int, char* [] );
+
 /*
 ** Name:        isValid
 ** Parameters:  string input
@@ -32,7 +47,7 @@ volatile sig_atomic_t  flag ( 1 );
 **              false - if the input is not an integer number
 ** Description: Check if the input is an integer number
 */
-bool isValid ( char* );
+bool isNumber ( char* );
 
 /*
 ** Name: manage_signal
@@ -48,31 +63,11 @@ void manage_signal ( int );
 int
 main ( int argc, char* argv [] )
 {
-    if ( argc < 2 )
+	if ( !isValidArgument ( argc, argv ) )
 	{
-		cout << "Usage: " << argv [ 0 ] << endl;
-        cout << "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13" << endl;
-
 		return 1;
 	}
-
-	/* Check if the argument is a number */
-    if ( !isValid ( argv [ 1 ] ) )
-    {
-        cout << "<port> must be an integer number between: 0 - 13" << endl;
-
-        return 1;
-    }
-
  	int port =  atoi ( argv [ 1 ] );
-
-    // Check if the number is between: 0 - 13
-    if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
-    {
-        cout <<  "<port> must be an integer number between: 0 - 13" << endl;
-
-        return 1;
-    }
 
 	// create access to gpio  pin
 	Gpio* led = new Gpio ( port );
@@ -118,9 +113,43 @@ main ( int argc, char* argv [] )
 
  	return 0;
 }
+// end of main
 
 bool
-isValid ( char* str )
+isValidArgument ( int argc, char* argv [] )
+{
+	/* Check the number of arguments*/
+    if ( argc < 2 )
+	{
+		cerr << "Usage: " << argv [ 0 ] << endl;
+        cerr << "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13" << endl;
+
+		return false;
+	}
+
+	/* Check if the argument is an integer number */
+    if ( !isNumber ( argv [ 1 ] ) )
+    {
+        cerr << "<port> must be an integer number between: 0 - 13" << endl;
+
+        return false;
+    }
+
+  	int port =  atoi ( argv [ 1 ] );
+
+    // Check if the number is between: 0 - 13
+    if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
+    {
+        cerr <<  "<port> must be an integer number between: 0 - 13" << endl;
+
+        return false;
+    }
+	
+	return true;
+}
+
+bool
+isNumber ( char* str )
 {
     while ( *str != 0 )
     {

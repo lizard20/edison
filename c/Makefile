@@ -4,14 +4,15 @@
 # bin/ - exec files   *
 # Author: Aldo Nunez
 
+RM = rm -f
 CC := gcc
 FLAGS := -Wall
 LIBS := -lmraa
 
-
 SRC := $(wildcard src/*.c)
 OBJ := $(SRC:src/%.c=obj/%.o)
 BIN := $(OBJ:obj/%.o=bin/%)	
+TMP := $(SRC:%.c=.c~)	
 
 all: $(BIN) $(OBJ)
 
@@ -21,10 +22,11 @@ bin/%: obj/%.o
 obj/%.o: src/%.c
 	@echo "Compiling:"  $<
 	$(CC) -o $@  -c $<
+	$(RM) $(TMP)
+	
 
 .PHONY: clean
 #
 clean:
 	@echo "Cleaning"
 	rm -f $(OBJ) $(BIN) 
-

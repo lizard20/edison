@@ -134,7 +134,7 @@ isValidArgument ( int argc, char* argv [] )
 		return false;
 	}
 
-	/* Check if the argument is an integer*/
+	/* Check if the argument is an integer number */
 	if ( !isNumber ( argv [ 1 ] ) )
     {
         fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
