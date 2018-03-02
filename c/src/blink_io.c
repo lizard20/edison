@@ -78,15 +78,15 @@ main ( int argc, char* argv [] )
 	led = mraa_gpio_init ( port );
 	if ( led == NULL )
 	{
-        fprintf (stderr, "The port %d that you requested is not valid!\n", port );
-        return 1;
+    	fprintf (stderr, "The port %d that you requested is not valid!\n", port );
+		return 1;
     }
 
 	/* set gpio drection to  out */
     mraa_result_t response = mraa_gpio_dir ( led, MRAA_GPIO_OUT );
     if ( response != MRAA_SUCCESS )
     {
-        mraa_result_print ( response );
+    	mraa_result_print ( response );
     }
 
     printf ( "MRAA Version: %s\n", mraa_get_version () );
