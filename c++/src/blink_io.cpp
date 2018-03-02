@@ -67,8 +67,8 @@ main ( int argc, char* argv [] )
 	{
 		return 1;
 	}
-	int port =  atoi ( argv [ 1 ] );
 
+	int port =  atoi ( argv [ 1 ] );
 	// create access to gpio  pin
 	Gpio* led = new Gpio ( port );
 	if ( led == NULL )
@@ -76,13 +76,12 @@ main ( int argc, char* argv [] )
 		return ERROR_UNSPECIFIED;
 	}
 
-
 	// set gpio drection to  out
 	Result response = led -> dir  ( DIR_OUT );
 	if ( response != SUCCESS )
-    {
+	{
     	printError ( response );
-    }
+	}
 
     cout << "blinking port " << port << "..." << endl;
 	cout <<  "To finish press: Ctrl + c" << endl;
