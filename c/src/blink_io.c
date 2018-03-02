@@ -23,15 +23,30 @@ const useconds_t T = 1e6;
 
 volatile sig_atomic_t  flag = 1;
 
+/************  Functions prototypes ************/
 /*
-** Name:        isValid
+** Name:      	isValidArgument
+** Parameters:  1.- Integer,  number of arguments
+** 				2.- Initail address of  pointers array to char
+** Output:      Boolean
+                true - 	if the input is a valid argument.
+						if it is an integer number, and  it 
+						is between 0 and 13
+**              false - if it is not an integer number between
+**              0 - 13
+** Description: Check if the inputs are valid arguments
+*/
+bool isValidArgument ( int, char* [] );
+
+/*
+** Name:        isNumber
 ** Parameters:  string input
 ** Output:      Boolean
                 true - if the input is an integer number.
 **              false - if the input is not an integer number
 ** Description: Check if the input is an integer number
 */
-bool isValid ( char* );
+bool isNumber ( char* );
 
 /*
 ** Name: manage_signal
@@ -43,33 +58,18 @@ bool isValid ( char* );
 ** 				flag variable
 */
 void manage_signal ( int );
+/*******  End of functions prototypes *********/
 
 int
 main ( int argc, char* argv [] )
 {
-	if ( argc < 2 )
-	{			fprintf ( stderr, "Usage: %s <port> \n", argv [ 0 ] );
-        fprintf ( stderr, "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 \n" );
 
+	if ( !isValidArgument ( argc, argv ) )
+	{
 		return 1;
 	}
-	/* Check if the argument is a number */
-    if ( !isValid ( argv [ 1 ] ) )
-    {
-        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
-
-        return 1;
-    }
 
 	int port =  atoi ( argv [ 1 ] );
-
-    /* Check if the number is between: 0 - 13 */
-    if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
-    {
-        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
-
-        return 1;
-    }
 
 	/* create access to gpio  pin */
 	mraa_gpio_context led;
@@ -78,7 +78,7 @@ main ( int argc, char* argv [] )
 	led = mraa_gpio_init ( port );
 	if ( led == NULL )
 	{
-        fprintf (stderr, "The port %d that you requested is not valid!", port );
+        fprintf (stderr, "The port %d that you requested is not valid!\n", port );
         return 1;
     }
 
@@ -120,9 +120,43 @@ main ( int argc, char* argv [] )
 
 	return 0;
 }
+/* end of main */
 
 bool
-isValid ( char* str )
+isValidArgument ( int argc, char* argv [] )
+{
+	/* Check the number of arguments*/
+	if ( argc < 2 )
+	{
+		fprintf ( stderr, "Usage: %s <port> \n", argv [ 0 ] );
+        fprintf ( stderr, "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 \n" );
+
+		return false;
+	}
+
+	/* Check if the argument is an integer*/
+	if ( !isNumber ( argv [ 1 ] ) )
+    {
+        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
+
+        return false;
+    }
+
+	int port =  atoi ( argv [ 1 ] );
+    /* Check if the number is between: 0 - 13 */
+    if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
+    {
+        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
+
+        return false;
+    }
+
+	return true;
+}
+
+
+bool
+isNumber ( char* str )
 {
     while ( *str != 0 )
     {
