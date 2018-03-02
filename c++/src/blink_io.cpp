@@ -65,7 +65,7 @@ main ( int argc, char* argv [] )
 {
 	if ( !isValidArgument ( argc, argv ) )
 	{
-	return 1;
+		return 1;
 	}
 	int port =  atoi ( argv [ 1 ] );
 
