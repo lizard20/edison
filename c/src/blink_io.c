@@ -34,7 +34,7 @@ volatile sig_atomic_t  flag = 1;
 bool isValid ( char* );
 
 /*
-** Name: manageSignal
+** Name: manage_signal
 ** Input: Integer
 ** Output: None
 ** Description: Catch the signal interrupt,
@@ -42,14 +42,13 @@ bool isValid ( char* );
 ** 				by the user  and  modify
 ** 				flag variable
 */
-void manageSignal ( int );
+void manage_signal ( int );
 
 int
 main ( int argc, char* argv [] )
 {
 	if ( argc < 2 )
-	{
-		fprintf ( stderr, "Usage: %s <port> \n", argv [ 0 ] );
+	{			fprintf ( stderr, "Usage: %s <port> \n", argv [ 0 ] );
         fprintf ( stderr, "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 \n" );
 
 		return 1;
@@ -95,7 +94,7 @@ main ( int argc, char* argv [] )
     printf ( "blinking port %d...\n", port );
 	printf ( "To finish press: Ctrl + c \n" );
 
-	signal ( SIGINT, manageSignal );
+	signal ( SIGINT, manage_signal );
 
 	/* blink indefinitely until (Ctrl + c) */
 	while ( flag )
@@ -137,7 +136,7 @@ isValid ( char* str )
 }
 
 void
-manageSignal ( int sig )
+manage_signal ( int sig )
 {
 	if ( sig == SIGINT )
 	{
