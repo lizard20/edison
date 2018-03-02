@@ -12,7 +12,7 @@ LIBS := -lmraa
 SRC := $(wildcard src/*.c)
 OBJ := $(SRC:src/%.c=obj/%.o)
 BIN := $(OBJ:obj/%.o=bin/%)	
-TMP := $(SRC:%.c=.c~)	
+TMP := $(SRC:src/%.c=src/.%*~)	
 
 all: $(BIN) $(OBJ)
 

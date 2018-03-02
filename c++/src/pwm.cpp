@@ -10,7 +10,6 @@
 using namespace mraa;
 using namespace std;
 
-
 const int gpio [] = { 3, 5, 6, 9 };
 const string pwm [] = { "P0", "P1", "P2", "P3" };
 const int T ( 20000 ); 		// T - period in usec
