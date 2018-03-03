@@ -63,6 +63,7 @@ void manage_signal ( int );
 int
 main ( int argc, char* argv [] )
 {
+	// Check if the argument is valid
 	if ( !isValidArgument ( argc, argv ) )
 	{
 		return 1;

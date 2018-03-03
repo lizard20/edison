@@ -15,6 +15,22 @@ const int pwm_num [] = { 3, 5, 6, 9 };
 const char* pwm [] = { "P0", "P1", "P2", "P3" };
 const int T =  20000; 		/* T ~ period in usec */
 
+/************  Functions prototypes ************/
+/*
+** Name:      	isValidArgument
+** Parameters:  1.- Integer,  number of arguments
+** 				2.- Initial address of  pointers array to char
+** Output:      Boolean
+                true -  if the first parameter is a valid port:
+						P0, P1, P2, P3
+						if the second parameter is a valid 
+						Duty Cycle percentage: 0% - 100%
+**              false - if it is not a valid Port.
+**              		if it is not a valid Duty Cycle
+** Description: Check if the inputs are valid arguments
+*/
+bool isValidArgument ( int , char* [] );
+
 /*
 ** Name: 		isValidPort
 ** Parameters:  Pointer to a character
@@ -26,7 +42,6 @@ const int T =  20000; 		/* T ~ period in usec */
 ** 				If it is not a vali port, return -1
 */
 int isValidPort ( char* );
-
 
 /*
 ** Name: 		isValidDC
@@ -50,42 +65,14 @@ void turnOff ( int );
 int
 main ( int argc, char* argv [] )
 {
-	/* check if the number of arguments is valid */
-	if ( argc < 3 )
+	// Check if the input arguments are valid
+	if ( !isValidArgument ( argc, argv ))
 	{
-		printf ( "Usage: %s <port> <duty cycle>\n", argv [ 0 ] );
-		printf ( "<port> P0 | P1 | P2 | P3\n" );
-		printf ( "<duty cycle> 0.0 - 100.0\n" );
-		return 1;
+		return 1;	
 	}
 
-	/* check if the  port is valid  */
-	int port_index;
-	if ( ( port_index = isValidPort ( argv [ 1 ] ) ) == -1 )
-	{
-		printf ( "Invalid port....\n" );
-		printf ( "<port> must be: P0 | P1 | P2 | P3\n" );
-		return 1;
-	}
-
-	/* checks if the argument is  a valid  number */
-	if ( !isValidDC ( argv [ 2 ] ) )
-	{
-		printf ( "Invalid argument....\n" );
-		printf ( "<duty cycle> must be a number between: 0.0 and 100.0 \n" );
-		return 1;
-	}
-
-	/*	converts the input argument to floating point
-		and checks if it is in the valid interval
-	*/
+	int port_index = atoi ( argv [ 1 ] );
 	float duty_cycle =  atof ( argv [ 2 ] );		/* percentage value */
-	if ( ( duty_cycle > 100.0 ) || ( duty_cycle  < 0.0 ) )
-	{
-		printf ( "<duty cycle> must be between: 0.0 and 100.0\n" );
-		return 1;
-	}
-
 	int pwm_port =  pwm_num [ port_index ];
 	mraa_init ();
 	mraa_pwm_context pwm;
@@ -114,6 +101,51 @@ main ( int argc, char* argv [] )
 
 	return ( MRAA_SUCCESS );
 }
+/* end of main */
+
+bool 
+isValidArgument ( int argc, char* argv [] )
+{
+	/* check if the number of arguments is valid */
+	if ( argc < 3 )
+	{
+		printf ( "Usage: %s <port> <duty cycle>\n", argv [ 0 ] );
+		printf ( "<port> P0 | P1 | P2 | P3\n" );
+		printf ( "<duty cycle> 0.0 - 100.0\n" );
+		return false;
+	}
+
+	/* check if the  port is valid  */
+	int port_index;
+	if ( ( port_index = isValidPort ( argv [ 1 ] ) ) == -1 )
+	{
+		printf ( "Invalid port....\n" );
+		printf ( "<port> must be: P0 | P1 | P2 | P3\n" );
+		return false;
+	}
+
+	/* checks if the argument is  a valid  number */
+	if ( !isValidDC ( argv [ 2 ] ) )
+	{
+		printf ( "Invalid argument....\n" );
+		printf ( "<duty cycle> must be a number between: 0.0 and 100.0 \n" );
+		return false;
+	}
+
+	/*	converts the input argument to floating point
+		and checks if it is in the valid interval
+	*/
+	float duty_cycle =  atof ( argv [ 2 ] );		/* percentage value */
+	if ( ( duty_cycle > 100.0 ) || ( duty_cycle  < 0.0 ) )
+	{
+		printf ( "<duty cycle> must be between: 0.0 and 100.0\n" );
+		return false;
+	}
+
+	return true;
+}
+
+/* end of main */
 
 bool
 isValidDC ( char* str )

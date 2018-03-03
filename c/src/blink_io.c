@@ -27,10 +27,9 @@ volatile sig_atomic_t  flag = 1;
 /*
 ** Name:      	isValidArgument
 ** Parameters:  1.- Integer,  number of arguments
-** 				2.- Initail address of  pointers array to char
+** 				2.- Initial address of  pointers array to char
 ** Output:      Boolean
-                true - 	if the input is a valid argument.
-						if it is an integer number, and  it 
+                true - 	if it is an integer number and  it 
 						is between 0 and 13
 **              false - if it is not an integer number between
 **              0 - 13
@@ -63,7 +62,7 @@ void manage_signal ( int );
 int
 main ( int argc, char* argv [] )
 {
-
+	/* Check if the argumentis is valid*/
 	if ( !isValidArgument ( argc, argv ) )
 	{
 		return 1;
