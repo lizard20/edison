@@ -71,12 +71,12 @@ main ( int argc, char* argv [] )
 		return 1;	
 	}
 
-	int port_index = atoi ( argv [ 1 ] );
+	int port_index = isValidPort (  argv [ 1 ] );
 	float duty_cycle =  atof ( argv [ 2 ] );		/* percentage value */
 	int pwm_port =  pwm_num [ port_index ];
 	mraa_init ();
 	mraa_pwm_context pwm;
-	pwm = mraa_pwm_init ( pwm_port );
+	pwm = mraa_pwm_init ( pwm_port);
 
 	if ( pwm == NULL )
 	{
@@ -89,7 +89,8 @@ main ( int argc, char* argv [] )
 
 	printf ( "MRAA Version: %s\n", mraa_get_version () );
 	printf ( "Platform: %s\n", mraa_get_platform_name () );
-	printf ( "Port Number: %d\n", pwm_port );
+	printf ( "PWM: %d\n",  port_index );
+	printf ( "Port Number: %d\n", pwm_port);
 	printf ( "Period: %1.3f sec \n", T * 1e-6 );
 	printf ( "Frequency: %2.2f Hz \n", 1e6 / T );
 	printf ( "Percentage of PWM: %2.1f \n",  100 * mraa_pwm_read ( pwm ) );

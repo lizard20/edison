@@ -63,8 +63,7 @@ main ( int argc, char* argv [] )
 		return 1;	
 	}
 
-
-	int port_index = atoi ( argv [ 1 ] );
+	int port_index ( isValidPort ( argv [ 1 ] ) );
 	float dutyCycle ( atof ( argv [ 2 ] ) );		// percentage value
 	int pwm_port ( gpio [ port_index ] );
 	Pwm* pwm = new Pwm ( pwm_port );
@@ -76,10 +75,12 @@ main ( int argc, char* argv [] )
 
 	pwm -> enable ( true );
 	pwm -> period_us ( T );		// f ~ 1/T
+	cout << dutyCycle << endl;
 	pwm -> write ( dutyCycle / 100.0 );
 
 	cout << "MRAA Version: " << mraa_get_version () << endl;
 	cout << "Platform: " << mraa_get_platform_name () << endl;
+	cout << "PWM: " << port_index << endl;
 	cout << "Port Number: " << pwm_port << endl;
 	cout << "Period: " << T * 1.0e-6 << " sec" << endl;
 	cout << "Frequency: " << 1.0e6 / T << " Hz" << endl;
