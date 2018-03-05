@@ -22,7 +22,7 @@ ports = [ i for i in range ( N ) ]
 # time
 T =  1.0    # 1.0 ~ 1 sec
 
-def main ():
+def main ( argv ):
     try:
         port =  int ( sys.argv [ 1 ] )
     except:
@@ -67,4 +67,4 @@ def main ():
         sys.exit ( 0 )
 
 if __name__ == "__main__":
-    main ()
+    main ( sys.argv [ 1: ] )

@@ -22,7 +22,7 @@ main ( void )
 		// turn off led
 		led.write ( 0 );
 		// wait for 1 second
-		usleep ( 1 );
+		sleep ( 1 );
 	}
 
 	// exit

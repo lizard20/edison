@@ -22,31 +22,37 @@ CCLKWISE = 2.0e-3
             the command to generate pwm signal 				
 '''
 def turn_servo ( p, t, d ):
-    pwm.period_us ( t )
-    pwm.enable ( True ) 
-    pwm.pulsewidth ( d )
+    p.period_us ( t )
+    p.enable ( True ) 
+    p.pulsewidth ( d )
     return;
 
-try:
-    n =  sys.argv [ 1 ]
-except:
-    print ( "<Usage>: " + sys.argv [ 0 ] + " <DIR>" )
-    print ( "<DIR>: CW or CCW")
-    sys.exit()
+def main ( argv ):
+    try:
+        n =  sys.argv [ 1 ]
+    except:
+        print ( "<Usage>: " + sys.argv [ 0 ] + " <DIR>" )
+        print ( "<DIR>: CW or CCW")
+        sys.exit()
 
-pwm = m.Pwm ( PORT )
-pwm.period_us ( T )
+    pwm = m.Pwm ( PORT )
+    pwm.period_us ( T )
 
-if sys.argv [ 1 ] == 'CW':
-    turn_servo ( pwm, T, CLKWISE )
-elif sys.argv [ 1 ] == 'CCW':
-    turn_servo ( pwm, T, CCLKWISE )
-else:
-    print ( "<DIR>: CW or CCW")
-    sys.exit ()
+    if sys.argv [ 1 ] == 'CW':
+        turn_servo ( pwm, T, CLKWISE )
+    elif sys.argv [ 1 ] == 'CCW':
+        turn_servo ( pwm, T, CCLKWISE )
+    else:
+        print ( "<Usage>: " + sys.argv [ 0 ] + " <DIR>" )
+        print ( "<DIR>: CW or CCW")
+        sys.exit ()
 
-print ( "MRAA Version: " + m.getVersion () )
-print ( "Platform: " + m.getPlatformName () )
-print ( "Port Number: " +  str ( PORT) )
+    print ( "MRAA Version: " + m.getVersion () )
+    print ( "Platform: " + m.getPlatformName () )
+    print ( "Port Number: " +  str ( PORT) )
 
-c = raw_input ( "Press \"Enter\" to finish." )
+    c = raw_input ( "Press \"Enter\" to finish." )
+
+if __name__ == "__main__":
+    main ( sys.argv [ 1: ] )
+

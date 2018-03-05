@@ -7,6 +7,7 @@ import mraa as m
 import time
 import sys
 
+# main
 def main ():
     led = m.Gpio ( 13 )
     led.dir ( m.DIR_OUT )

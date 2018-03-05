@@ -1,7 +1,7 @@
 ''' 
  Name: pwm.py
  Description: Generate a PWM output. The user enters 
-              the percentage of  duty cycle
+              the port and the percentage of duty cycle
  Author: Aldo Nunez
 '''
 
@@ -50,47 +50,52 @@ def turnOff ( port ):
     p = m.Gpio ( port )
     p.dir ( m.DIR_OUT )
     p.write ( OFF )
-        
-if len ( sys.argv ) < 3:
-    print ( "Usage: python " + sys.argv [ 0 ] +  " <port>" + " <number>" )
-    print ( "<port>: P0 | P1 | P2 | P3" )
-    print ( "<number>: 0.0 - 100.0" )
-    sys.exit ()
+
+# main 
+def main ( argv ):
+    if len ( sys.argv ) < 3:
+        print ( "Usage: python " + sys.argv [ 0 ] +  " <port>" + " <duty_cycle>" )
+        print ( "<port>: P0 | P1 | P2 | P3" )
+        print ( "<duty_cycle>: 0.0 - 100.0" )
+        sys.exit ()
 
 # check if it is a valid  port
-p = isValidPort ( sys.argv [ 1 ] )
-if p  == False:
-    print ( "Invalid port...." )
-    print ( "Argument must be: P0 | P1 | P2 | P3" )
-    sys.exit ()
+    p = isValidPort ( sys.argv [ 1 ] )
+    if p  == False:
+        print ( "Invalid port...." )
+        print ( "Argument must be: P0 | P1 | P2 | P3" )
+        sys.exit ()
 
 # check if it is a valid duty cycle
-if isValidDC ( sys.argv [ 2 ] ) == False:
-    print ( "Invalid argument...." )
-    print ( "Argument must be a number between: 0.0 - 100.0" )
-    sys.exit ()
+    if isValidDC ( sys.argv [ 2 ] ) == False:
+        print ( "Invalid argument...." )
+        print ( "Argument must be a number between: 0.0 - 100.0" )
+        sys.exit ()
 
 # convert the input argument to floating point
 # and check if it is in the valid interval
-value = float ( sys.argv [ 2 ] );
-if value < 0.0 or value > 100.0:
-    print ( "<number> must be between: 0.0 - 100.0" )
-    sys.exit ()
-	     
-PIN_PORT = p
-out = m.Pwm ( PIN_PORT )
-out.period_us ( T )
-out.enable ( True )
-out.write ( value / 100.0 )
+    value = float ( sys.argv [ 2 ] );
+    if value < 0.0 or value > 100.0:
+        print ( "<number> must be between: 0.0 - 100.0" )
+        sys.exit ()
 
-print ( "MRAA Version: " + m.getVersion () )
-print ( "Platform: " + m.getPlatformName () )
-print ( "Port Number: " +  str ( PIN_PORT ) )
-print ( "Period: " + str ( T * 1.0e-6 ) + " sec" )
-print ( "Frequency: " + str ( 1.0e6 / T ) + " Hz" )
-print ( "Percentage of PWM: "),
-print ( "{0:.2f}".format ( round ( 100 *  out.read (), 2 ) ) )
+    PIN_PORT = p
+    out = m.Pwm ( PIN_PORT )
+    out.period_us ( T )
+    out.enable ( True )
+    out.write ( value / 100.0 )
 
-c = raw_input ( "Press \"Enter\" to finish." )
-turnOff ( PIN_PORT )
+    print ( "MRAA Version: " + m.getVersion () )
+    print ( "Platform: " + m.getPlatformName () )
+    print ( "PWM: " + sys.argv [ 1 ] )
+    print ( "Port Number: " +  str ( PIN_PORT ) )
+    print ( "Period: " + str ( T * 1.0e-6 ) + " sec" )
+    print ( "Frequency: " + str ( 1.0e6 / T ) + " Hz" )
+    print ( "Percentage of PWM: "),
+    print ( "{0:.2f}".format ( round ( 100 *  out.read (), 2 ) ) )
 
+    c = raw_input ( "Press \"Enter\" to finish." )
+    turnOff ( PIN_PORT )
+
+if __name__ == "__main__":
+    main ( sys.argv [ 1: ] )

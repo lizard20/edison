@@ -14,7 +14,7 @@ N = 14
 
 ports = [ i for i in range ( N ) ]
 
-def main ():
+def main ( argv ):
     try:
         port_number =  int ( sys.argv [ 1 ] )
     except:
@@ -45,4 +45,4 @@ def main ():
     print ( "Input port %s: %s" % ( str ( port_number ), str ( value ) ) )
 
 if __name__ == "__main__":
-    main ()
+    main ( sys.argv [ 1: ] )
