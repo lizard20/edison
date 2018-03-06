@@ -10,7 +10,6 @@ var m = require ( 'mraa' );
 // error message
 message1 = "<port>: 0 | 1 | 2 | 3 |...| 13";
 
-
 // number of digital output ports
 const PORTS = 14
 
