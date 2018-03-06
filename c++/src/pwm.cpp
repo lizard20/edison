@@ -100,7 +100,7 @@ isValidArgument ( int argc, char* argv [] )
 {
 	if ( argc < 3 )
 	{
-		cerr << "Usage: " << argv [ 0 ] << "<port>" << " <duty cycle>" << endl;
+		cerr << "Usage: " << argv [ 0 ] << " <port>" << " <duty cycle>" << endl;
 		cerr << "<port>: " << pwm [ 0 ] << " | " << pwm [ 1 ] << " | " <<  pwm [ 2 ] <<  " | " <<  pwm [ 3 ] << endl;
 		cerr << "<duty cycle>: 0.0 - 100.0" << endl;
 
