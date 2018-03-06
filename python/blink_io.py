@@ -10,6 +10,7 @@ import time
 import sys
 
 
+message = "<port>: 0 | 1 | 2 | 3 |...| 13 "
 # STATES
 OFF = 0
 ON = 1
@@ -20,18 +21,19 @@ N = 14
 ports = [ i for i in range ( N ) ]
 
 # time
-T =  1.0    # 1.0 ~ 1 sec
+T =  0.1    # 0.1 sec
 
 def main ( argv ):
     try:
         port =  int ( sys.argv [ 1 ] )
     except:
         print ( "Usage: python %s <port>" % sys.argv [ 0 ] )
-        print ( "<port>: 0 | 1 | 2 | 3 |...| 13 " )
+        print ( message )
         sys.exit ()
 
     if port < min( ports ) or port > max ( ports ):
-        print ( "<port> must be an integer number between: %d - %d" % ( min ( ports ), max ( ports ) ) )
+        print ( "<port> must be between 0..13" )
+        print ( message )
         sys.exit ()
 
     led = m.Gpio ( port )

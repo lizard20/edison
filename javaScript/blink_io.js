@@ -13,7 +13,7 @@ const PORTS = 14
 const STATES = {OFF: 0, ON: 1 };
 
 // time in milliseconds
-const T = 1000;
+const T = 100;
 
 if ( process.argv.length < 3 )
 {
@@ -28,7 +28,7 @@ var port = Number ( process.argv [ 2 ] );
 // Check if the argument is a number
 if ( !Number.isInteger ( port ) )
 {
-    console.log ( "<port> must be an integer number: 0 | 1 | 2 | 3 |...| 13" );
+    console.log ( "<port> 0 | 1 | 2 | 3 |...| 13" );
 
     process.exit ( 1 );
 }
@@ -36,8 +36,8 @@ if ( !Number.isInteger ( port ) )
 // Check if the number is between: 0 - 13
 if ( ( port < 0  ) || ( port  > PORTS - 1 )  )
 {
-    console.log ( "<port> must be an integer number between: 0 - 13" );
-
+	console.log ( "<port> must be between: 0..13");
+    console.log ( "<port> 0 | 1 | 2 | 3 |...| 13" );
     process.exit ( 1 );
 }
 

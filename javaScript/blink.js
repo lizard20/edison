@@ -2,7 +2,7 @@
 // Description: blink LED
 // Author: Aldo Nunez
  
-module  mraa
+//module  mraa
 var m = require ( 'mraa' );
 
 // choose pin

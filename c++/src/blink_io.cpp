@@ -13,51 +13,57 @@
 using namespace std;
 using namespace mraa;
 
-/* OFF = 0, ON = 1 */
+// error messages 
+string message1 = "Usage: ";
+string message2 = "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 ";
+string  message3 = "<port> must be between: 0..13";
+	
+// OFF = 0, ON = 1
 enum STATE { OFF, ON };
 
- /* number of digital oputput ports  */
+ // number of digital oputput ports  
 const unsigned int  PORTS ( 14 );
-//enum DIGITAL_OUT { IO0, IO1, IO2, IO3, IO4, IO5, IO6, IO7, IO8, IO9, IO10, IO11, IO12, IO13} digital_output;
 
-const useconds_t T = 1e6;	/* 1e6 ~ 1 sec */
+
+// 1e5 ~ 0.1 sec 
+const useconds_t T = 1e5;
 
 volatile sig_atomic_t  flag ( 1 );
 
-/************  Functions prototypes ************/
-/*
-** Name:      	isValidArgument
-** Parameters:  1.- Integer,  number of arguments
-** 				2.- Initail address of  pointers array to char
-** Output:      Boolean
-                true - 	if the input is a valid argument.
-						if it is an integer number, and  it 
-						is between 0 and 13
-**              false - if it is not an integer number between
-**              0 - 13
-** Description: Check if the inputs are valid arguments
-*/
+//************  Functions prototypes ************
+//
+// Name:      	isValidArgument
+// Parameters:  1.- Integer,  number of arguments
+// 				2.- Initail address of  pointers array to char
+// Output:      Boolean
+//                true - 	if the input is a valid argument.
+//						if it is an integer number, and  it 
+//						is between 0 and 13
+//              false - if it is not an integer number between
+//              0 - 13
+// Description: Check if the inputs are valid arguments
+//
 bool isValidArgument ( int, char* [] );
 
-/*
-** Name:        isValid
-** Parameters:  string input
-** Output:      Boolean
-                true - if the input is an integer number.
-**              false - if the input is not an integer number
-** Description: Check if the input is an integer number
-*/
+//
+// Name:        isValid
+// Parameters:  string input
+// Output:      Boolean
+//                true - if the input is an integer number.
+//              false - if the input is not an integer number
+// Description: Check if the input is an integer number
+//
 bool isNumber ( char* );
 
-/*
-** Name: manage_signal
-** Input: Integer
-** Output: None
-** Description: Catch the signal interrupt,
-** 				'Ctrl + c' signal  generated
-** 				by the user  and  modify
-** 				flag variable
-*/
+//
+// Name: manage_signal
+// Input: Integer
+// Output: None
+// Description: Catch the signal interrupt,
+// 				'Ctrl + c' signal  generated
+// 				by the user  and  modify
+// 				flag variable
+//
 void manage_signal ( int );
 
 int
@@ -118,20 +124,20 @@ main ( int argc, char* argv [] )
 bool
 isValidArgument ( int argc, char* argv [] )
 {
-	/* Check the number of arguments*/
+	// Check the number of arguments
+	message1 = message1 + argv [ 0 ] + " <port>";
     if ( argc < 2 )
 	{
-		cerr << "Usage: " << argv [ 0 ] << endl;
-        cerr << "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13" << endl;
-
+		cerr << message1 << endl;
+        cerr << message2  << endl;
 		return false;
 	}
 
-	/* Check if the argument is an integer number */
+	// Check if the argument is an integer number 
     if ( !isNumber ( argv [ 1 ] ) )
     {
-        cerr << "<port> must be an integer number between: 0 - 13" << endl;
-
+		cerr << message1  << endl;
+        cerr << message2  << endl;
         return false;
     }
 
@@ -140,11 +146,10 @@ isValidArgument ( int argc, char* argv [] )
     // Check if the number is between: 0 - 13
     if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
     {
-        cerr <<  "<port> must be an integer number between: 0 - 13" << endl;
-
+        cerr << message3  << endl;
+        cerr << message2  << endl;
         return false;
     }
-	
 	return true;
 }
 
@@ -170,6 +175,5 @@ manage_signal ( int sig )
 		flag = 0;
 	}
 	cout << endl << "program is closing ..." << endl;
-
 	return;
 }

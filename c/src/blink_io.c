@@ -9,6 +9,11 @@
 #include <signal.h>
 #include <mraa.h>
 
+/* error messages */
+const char* message1 = "Usage: %s <port> \n";
+const char* message2 = "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 \n";
+const char* message3 = "<port> must be between: 0..13 \n";
+	
 /* false = 0, true = 1 */
 typedef enum { false, true } bool;
 
@@ -18,8 +23,8 @@ enum STATE { OFF, ON };
 /* number of digital outputs ports */
 const unsigned int PORTS = 14;
 
-/* 1e6 ~ 1 sec */
-const useconds_t T = 1e6;
+/* 1e5 ~ 0.1 sec */
+const useconds_t T = 1e5;
 
 volatile sig_atomic_t  flag = 1;
 
@@ -116,7 +121,6 @@ main ( int argc, char* argv [] )
 	}
 
 	mraa_gpio_close ( led );
-
 	return 0;
 }
 /* end of main */
@@ -127,17 +131,16 @@ isValidArgument ( int argc, char* argv [] )
 	/* Check the number of arguments*/
 	if ( argc < 2 )
 	{
-		fprintf ( stderr, "Usage: %s <port> \n", argv [ 0 ] );
-        fprintf ( stderr, "<port>: 0 | 1 | 2 | 3 | 4 | 5 |.....| 13 \n" );
-
+		fprintf ( stderr, message1, argv [ 0 ] );
+        fprintf ( stderr, message2 );
 		return false;
 	}
 
 	/* Check if the argument is an integer number */
 	if ( !isNumber ( argv [ 1 ] ) )
     {
-        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
-
+		fprintf ( stderr, message1, argv [ 0 ] );
+        fprintf ( stderr, message2 );
         return false;
     }
 
@@ -145,14 +148,12 @@ isValidArgument ( int argc, char* argv [] )
     /* Check if the number is between: 0 - 13 */
     if ( ( port < 0 ) || ( port  > PORTS - 1 ) )
     {
-        fprintf ( stderr, "<port> must be an integer number between: 0 - 13 \n" );
-
+        fprintf ( stderr, message3 );
+        fprintf ( stderr, message2 );
         return false;
     }
-
 	return true;
 }
-
 
 bool
 isNumber ( char* str )
@@ -176,6 +177,5 @@ manage_signal ( int sig )
 		flag = 0;
 	}
 	printf ("\nprogram is closing ... \n" );
-
 	return;
 }
