@@ -25,6 +25,8 @@ main ( void )
 	int value = mraa_gpio_read ( port_input );
 
     /* print port number and its value */
+	printf ( "MRAA Version: %s \n", mraa_get_version () );
+	printf ( "Platform: %s \n", mraa_get_platform_name () );
 	printf ( "Input port %d: %d\n", PORT, value );
 
     /* close port */

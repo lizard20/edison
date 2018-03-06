@@ -70,7 +70,7 @@ main ( int argc, char* argv [] )
 	/* Check if the argumentis is valid*/
 	if ( !isValidArgument ( argc, argv ) )
 	{
-		return 1;
+		exit ( 1 );
 	}
 
 	int port =  atoi ( argv [ 1 ] );
@@ -83,7 +83,7 @@ main ( int argc, char* argv [] )
 	if ( led == NULL )
 	{
     	fprintf (stderr, "The port %d that you requested is not valid!\n", port );
-		return 1;
+		exit ( 1 );
     }
 
 	/* set gpio drection to  out */

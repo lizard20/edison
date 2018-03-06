@@ -124,8 +124,8 @@ main ( int argc, char* argv [] )
 bool
 isValidArgument ( int argc, char* argv [] )
 {
-	// Check the number of arguments
 	message1 = message1 + argv [ 0 ] + " <port>";
+	// Check the number of arguments
     if ( argc < 2 )
 	{
 		cerr << message1 << endl;

@@ -6,6 +6,9 @@
 // mraa module
 var m = require ( 'mraa' );
 
+// errrors  message
+message1 = "<port>: 0 | 1 | 2 | 3 | ... | 13";
+
 // number of digital output ports
 const PORTS = 14
 
@@ -18,7 +21,7 @@ const T = 100;
 if ( process.argv.length < 3 )
 {
     console.log ( "Usage: node " + process.argv [ 1 ].split ( "/") [ 5 ] + " <port>" );
-    console.log ( "<port>: 0 | 1 | 2 | 3 | ... | 13 " );
+    console.log ( message1 );
 
     process.exit ( 1 );
 }
@@ -28,7 +31,7 @@ var port = Number ( process.argv [ 2 ] );
 // Check if the argument is a number
 if ( !Number.isInteger ( port ) )
 {
-    console.log ( "<port> 0 | 1 | 2 | 3 |...| 13" );
+    console.log ( message1 );
 
     process.exit ( 1 );
 }
@@ -37,7 +40,7 @@ if ( !Number.isInteger ( port ) )
 if ( ( port < 0  ) || ( port  > PORTS - 1 )  )
 {
 	console.log ( "<port> must be between: 0..13");
-    console.log ( "<port> 0 | 1 | 2 | 3 |...| 13" );
+    console.log ( message1 );
     process.exit ( 1 );
 }
 

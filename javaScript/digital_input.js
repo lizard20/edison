@@ -15,6 +15,8 @@ port_input.dir ( m.DIR_IN );
 // Reads the digital value
 var value = port_input.read ();
 
+console.log ( "MRAA Version: " +  m.getVersion () );
+console.log ( "Platform: ", m.getPlatformName () );
 console.log ( "Input port " + PORT + ": " + value );
 
 delete ( port_input );

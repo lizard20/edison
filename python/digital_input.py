@@ -19,6 +19,8 @@ def main ():
     # read port value
     value  = port_input.read ()
 
+    print ( "MRAA Version: %s" %  m.getVersion () )
+    print ( "Platform: %s" % m.getPlatformName () )
     print ( "Input port %d: %d" % (  PORT , value ) )
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ main ( void )
     // set gpio direction to input
 	port_input -> dir ( DIR_IN );
 
-    /* read port value */
+    // read port value 
 	int value ( port_input -> read () );
 
 	cout << "MRAA Version: " << mraa_get_version () << endl;

@@ -23,7 +23,8 @@ def main ( argv ):
         sys.exit ()
 
     if port_number < min( ports ) or port_number > max ( ports ):
-        print ( "<port> must be an integer number between: %d - %d" % ( min ( ports ), max ( ports ) ) )
+        print ( "<port> must be  between: %d..%d" % ( min ( ports ), max ( ports ) ) )
+        print ( "<port>: 0 | 1 | 2 | 3 |...| 13 " )
         sys.exit ()
 
     input_port = m.Gpio ( port_number )
