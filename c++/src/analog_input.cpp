@@ -7,7 +7,13 @@
 #include <mraa.hpp>
 
 using namespace mraa;
-using std::cout;
+using namespace std;
+
+// error message
+string message = "<port>: 0 | 1 | 2 | 3 | 4 | 5";
+
+enum ANALOG_IN { A0, A1, A2, A3, A4, A5 };	// analog ports: A0 - A5
+const int NBITS  ( 12 );			// number of bits
 
 // Name: 		isValid
 // Parameters:  pointer to string
@@ -16,8 +22,6 @@ using std::cout;
 // Description:	Check if the input is an integer number
 bool isValid ( char* );
 
-enum ANALOG_IN { A0, A1, A2, A3, A4, A5 };	// analog ports: A0 - A5
-const int NBITS  ( 12 );			// number of bits
 
 int
 main ( int argc, char* argv[] )
@@ -25,15 +29,16 @@ main ( int argc, char* argv[] )
 	// Check if the number of arguments is 2
 	if ( argc < 2 )
 	{
-		cout << "Usage: " << argv [ 0 ] << " <port>" << std::endl;
-		cout << "<port>: 0 | 1 | 2 | 3 | 4 | 5" << std::endl;
+		cerr << "Usage: " << argv [ 0 ] << " <port>" << endl;
+		cerr << message << endl;
 		return 1;
 	}
 
 	// Check if the argument is a number
 	if ( !isValid ( argv [ 1 ] ) )
 	{
-		cout << "<port> must be an integer number: 0 | 1 | 2 | 3 | 4 | 5 " << "\n";
+		cerr << "Usage: " << argv [ 0 ] << " <port>" << endl;
+		cerr << message << endl;
 		return 1;
 	}
 
@@ -42,7 +47,7 @@ main ( int argc, char* argv[] )
 
 	if ( ( port < A0 ) || ( port  > A5 ) )
 	{
-		cout << "<port> must be an integer number between: 0 - 5" << std::endl;
+		cerr << message << endl;
 		return 1;
 	}
 
@@ -66,7 +71,7 @@ main ( int argc, char* argv[] )
 		intValue = aInput -> read ();			// reading integer value
 		floatValue = aInput -> readFloat ();	// reading float value
         cout << "ADC " << port <<  " read integer: " << intValue << "\n";
-        cout << "ADC " << port <<  " read float:  " <<  std::setprecision ( 5 ) << floatValue << "\n";
+        cout << "ADC " << port <<  " read float:  " <<  setprecision ( 5 ) << floatValue << "\n";
 		sleep ( 1 );
     }
 
@@ -74,7 +79,7 @@ main ( int argc, char* argv[] )
 
 	return ( MRAA_SUCCESS );
 }
-
+//end of main
 
 bool
 isValid ( char* str )

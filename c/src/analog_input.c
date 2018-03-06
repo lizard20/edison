@@ -9,6 +9,7 @@
 
 typedef enum { false, true } bool;
 
+const char* message = "<port>: 0 | 1 | 2 | 3 | 4 | 5\n";
 /*
 ** Name: 		isValid
 ** Parameters:  string input
@@ -17,7 +18,7 @@ typedef enum { false, true } bool;
 **				false - if the input is not an integer number
 ** Description:	Check if the input is an integer number
 */
-bool isValid ( char* );
+bool isValid ( const char* );
 
 enum ANALOG { A0, A1, A2, A3, A4, A5 } analog_input;	/* analog ports: 0 - 5 */
 const int NBITS  = 12 ;			/* number of bits */
@@ -28,18 +29,17 @@ main ( int argc, char* argv[] )
 	/* Check if the number of arguments is 2 */
 	if ( argc < 2 )
 	{
-		printf ( "Usage: %s <port>\n", argv [ 0 ] );
-		printf ( "<port>: 0 | 1 | 2 | 3 | 4 | 5\n" );
-
-		return 1;
+		fprintf ( stderr, "Usage: %s <port>\n", argv [ 0 ] );
+		fprintf ( stderr,  message);
+		exit( 1 );
 	}
 
 	/* Check if the argument is a number */
 	if ( !isValid ( argv [ 1 ] ) )
 	{
-		printf ( "<port> must be an integer number: 0 | 1 | 2 | 3 | 4 | 5 \n" );
-
-		return 1;
+		fprintf ( stderr, "Usage: %s <port>\n", argv [ 0 ] );
+		fprintf ( stderr,  message);
+		exit( 1 );
 	}
 
 	int port =  atoi ( argv [ 1 ] );
@@ -47,11 +47,8 @@ main ( int argc, char* argv[] )
 	/* Check if the number is between: 0 - 5 */
 	if ( ( port < A0 ) || ( port  > A5 ) )
 	{
-		printf ( "<port> must be an integer number between: 0 - 5 \n" );
-
-		return 1;
+		fprintf ( stderr,  message);
 	}
-
 
 	uint16_t int_value = 0;	/* variable  to read integer value */
 	float float_value = 0.0;	/* variable to read float value */
@@ -64,7 +61,7 @@ main ( int argc, char* argv[] )
 
 	if ( adc_port == NULL )
 	{
-        return 1;
+		exit ( 1 );
     }
 
 	mraa_aio_set_bit ( adc_port, NBITS ); /* Configure ADC */
@@ -84,9 +81,10 @@ main ( int argc, char* argv[] )
 	mraa_aoi_close ( adc_port );
 	return ( MRAA_SUCCESS );
 }
+// end of main
 
 bool
-isValid ( char* str )
+isValid ( const char* str )
 {
 	while ( *str != 0 )
 	{

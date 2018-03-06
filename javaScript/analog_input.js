@@ -4,6 +4,8 @@
 
 var m = require ( 'mraa' );     // module  mraa
 
+message = "<port>: 0 | 1 | 2 | 3 | 4 | 5";
+
 const ANALOG_IN = { A0: 0, A1: 1, A2: 2, A3: 3, A4: 4, A5: 5 };  // analog ports: A0 - A5
 const  NBITS  = 12;            // number of bits
 
@@ -11,8 +13,7 @@ const  NBITS  = 12;            // number of bits
 if ( process.argv.length < 3 )
 {
     console.log ( "Usage: node " + process.argv [ 1 ].split ( "/") [ 5 ] + " <port>" );
-    console.log ( "<port>: 0 | 1 | 2 | 3 | 4 | 5" );
-
+    console.log ( message );
     process.exit ( 1 );
 }
 
@@ -21,16 +22,15 @@ var port = Number ( process.argv [ 2 ] );
 // Check if the argument is a number
 if ( !Number.isInteger ( port ) )
 {
-    console.log ( "<port> must be an integer number: 0 | 1 | 2 | 3 | 4 | 5" );
-
+    console.log ( "Usage: node " + process.argv [ 1 ].split ( "/") [ 5 ] + " <port>" );
+    console.log ( message );
     process.exit ( 1 );
 }
 
 // Check if the number is between: 0 - 5
 if ( ( port < 0 ) || ( port  > 5 )  )
 {
-    console.log ( "<port> must be an integer number between: 0 - 5" );
-
+    console.log ( message );
     process.exit ( 1 );
 }
 

@@ -20,7 +20,7 @@ def main ( argv ):
 
     #Check if the number is between: 0 - 5
     if ( port > 5 ) or ( port < 0 ):
-        print ( "<port> must be an integer number between: 0 - 5" );
+        print ( "<port>: 0 | 1 | 2 | 3 | 4 | 5 " )
         sys.exit ()
 
     analogIn = m.Aio ( port )
