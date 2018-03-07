@@ -12,7 +12,7 @@ import sys
 # Number of digital output ports
 N = 14
 
-ports = [ i for i in range ( N ) ]
+ports  = list ( range ( N ) )
 
 def main ( argv ):
     try:
@@ -22,7 +22,7 @@ def main ( argv ):
         print ( "<port>: 0 | 1 | 2 | 3 |...| 13 " )
         sys.exit ()
 
-    if port_number < min( ports ) or port_number > max ( ports ):
+    if not ( port_number in ports ):
         print ( "<port> must be  between: %d..%d" % ( min ( ports ), max ( ports ) ) )
         print ( "<port>: 0 | 1 | 2 | 3 |...| 13 " )
         sys.exit ()
@@ -34,12 +34,12 @@ def main ( argv ):
     response = input_port.dir ( m.DIR_IN )
     if response != m.SUCCESS:
         m.printError ( response )
-        sys.exit()
+        sys.exit ()
 
     value  = input_port.read ()
     if value == -1:
         print ( "Failed reading port %d" % input_port );
-        sys.exit ()
+        sys.exit() 
 
     print ( "MRAA Version: %s" %  m.getVersion () )
     print ( "Platform: %s" % m.getPlatformName () )

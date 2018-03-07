@@ -63,20 +63,20 @@ def main ( argv ):
     p = isValidPort ( sys.argv [ 1 ] )
     if p  == False:
         print ( "Invalid port...." )
-        print ( "Argument must be: P0 | P1 | P2 | P3" )
+        print ( "<port>, must be: P0 | P1 | P2 | P3" )
         sys.exit ()
 
 # check if it is a valid duty cycle
     if isValidDC ( sys.argv [ 2 ] ) == False:
         print ( "Invalid argument...." )
-        print ( "Argument must be a number between: 0.0 - 100.0" )
+        print ( "<duty cycle>, must be between: 0.0 - 100.0" )
         sys.exit ()
 
 # convert the input argument to floating point
 # and check if it is in the valid interval
     value = float ( sys.argv [ 2 ] );
     if value < 0.0 or value > 100.0:
-        print ( "<number> must be between: 0.0 - 100.0" )
+        print ( "<duty cycle>, must be between: 0.0 - 100.0" )
         sys.exit ()
 
     PIN_PORT = p

@@ -8,7 +8,13 @@ import time
 import sys
 import mraa as m
 
-NBITS = 12
+# ADC resolution
+NBITS = 12 
+
+# Number of analog ports
+N = 6
+
+PORTS = list ( range ( N ) )
 
 def main ( argv ):
     try:
@@ -19,7 +25,7 @@ def main ( argv ):
         sys.exit ()
 
     #Check if the number is between: 0 - 5
-    if ( port > 5 ) or ( port < 0 ):
+    if not ( port in PORTS ):
         print ( "<port>: 0 | 1 | 2 | 3 | 4 | 5 " )
         sys.exit ()
 
