@@ -1,5 +1,5 @@
 /*
-** Name: pwm.c
+** Name: servo.c
 ** Description: Generate a PWM signal to control a servo motor.
 ** 				The user enters the turn direction: CW or CCW
 ** Author: Aldo Nunez

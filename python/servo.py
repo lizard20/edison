@@ -1,16 +1,10 @@
 '''
  Program: servo.py
- Description: Generates a PWM signal to control a servo
+ Description: Generates a PWM signal to control a servo motor
  Author: Aldo Nunez
 '''
 import sys
 import mraa as m
-
-PORT = 3
-
-T = 20000           # Period: 20 msec; f = 50 Hz
-CLKWISE = 1.0e-3
-CCLKWISE = 2.0e-3
 
 '''
  Program: turnServo
@@ -34,13 +28,20 @@ def main ( argv ):
         print ( "<Usage>: " + sys.argv [ 0 ] + " <DIR>" )
         print ( "<DIR>: CW or CCW")
         sys.exit()
+    
+    PORT = 3
+    T = 20000           # Period: 20 msec; f = 50 Hz
+    CLKWISE = 1.0e-3
+    CCLKWISE = 2.0e-3
+
 
     pwm = m.Pwm ( PORT )
     pwm.period_us ( T )
+    turn_dir = sys.argv [ 1 ]
 
-    if sys.argv [ 1 ] == 'CW':
+    if turn_dir == 'CW':
         turn_servo ( pwm, T, CLKWISE )
-    elif sys.argv [ 1 ] == 'CCW':
+    elif turn_dir == 'CCW':
         turn_servo ( pwm, T, CCLKWISE )
     else:
         print ( "<Usage>: " + sys.argv [ 0 ] + " <DIR>" )
@@ -50,8 +51,8 @@ def main ( argv ):
     print ( "MRAA Version: " + m.getVersion () )
     print ( "Platform: " + m.getPlatformName () )
     print ( "Port Number: " +  str ( PORT) )
-
-    c = raw_input ( "Press \"Enter\" to finish." )
+    print ( "Clockwise" if turn_dir == "CW"  else "Counter clockwise" )
+    c = raw_input ( "" )
 
 if __name__ == "__main__":
     main ( sys.argv [ 1: ] )
